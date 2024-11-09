@@ -1,17 +1,22 @@
-export default function CvEducation({schools}){
+export default function CvEducation({ setEditingIndex, setEditing, setShowEducation, schools }) {
+    const startEditingSchool = (index) => {
+        setEditingIndex(index);
+        setEditing(true);
+        setShowEducation(true);
+    };
+
     return (
         <div className="education">
-            {schools.map((school => {
-                return (
-                    <div className="school">
+            {schools.map((school, index) => (
+                <div className="school" key={school.name}>
                     <h3>{school.name}</h3>
                     <p>{school.degree}</p>
                     <p>{school.startYear}</p>
                     <p>{school.endYear}</p>
                     <p>{school.location}</p>
-                    </div>
-                )
-            }))}
+                    <button onClick={() => startEditingSchool(index)}>Edit</button>
+                </div>
+            ))}
         </div>
-    )
+    );
 }
