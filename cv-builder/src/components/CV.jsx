@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import CvHeader from './cvHeader'
 import PersonalInput from './personalInput'
+import CvEducation from './CvEducation'
 
 export default function CV(){
     const [personalDetails, setPersonalDetails] = useState({
@@ -15,11 +16,23 @@ export default function CV(){
         setPersonalDetails({ ...personalDetails, [name]: value })
     }
 
+    const [schools, setSchools] = useState([
+        {
+            name: "Cardiff Uni",
+            degree: "Computer Science",
+            startYear: 2024,
+            endYear: 2028,
+            location: "Cardiff"
+    }
+])
+
     return (
     <>
     
     <CvHeader 
     personalDetails = {personalDetails}/>
+
+    <CvEducation schools = {schools} />
 
     <PersonalInput 
     personalDetails = {personalDetails} 
