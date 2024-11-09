@@ -44,8 +44,12 @@ export default function CV() {
     };
     
 
+    // editingIndex needs to be stored in memory at the point before edit commmences
+    // if cancelEdit is called, then restore the school at editIndex, to it's previous value
+
     const handleSubmit = (event, formData) => {
         event.preventDefault();
+        previousValue = {}
         setSchools((prevSchools) => {
             const updatedSchools = [...prevSchools];
             if (editing) {

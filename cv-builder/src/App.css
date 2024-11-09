@@ -13,7 +13,7 @@
   width: 50%;
   grid-row: 1;
   background-color: wheat;
-  max-height: 50vh;
+  max-height: 100%;
 }
 
 .cv{
