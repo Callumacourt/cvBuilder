@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 export default function EducationInput({ 
-    setEditing, 
     setShowEducation, 
     showEducation, 
     formData: initialFormData = {}, 
     editing, 
     handleSubmit, 
-    updateFormData 
+    handleEdit, 
+    setEditing
 }) {
     const [formData, setFormData] = useState(initialFormData);
 
@@ -18,22 +18,24 @@ export default function EducationInput({
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
+
         if (editing) {
-            updateFormData(name, value); 
+            handleEdit(e); 
         }
     };
 
     const onSubmit = (e) => {
         handleSubmit(e, formData);
         setFormData({}); 
+        editing = false
     };
 
     return (
         <div>
             <button onClick={() => {
                 setShowEducation(true);
-                setEditing(false); 
                 setFormData({}); 
+                setEditing(false)
             }}>
                 Add School
             </button>

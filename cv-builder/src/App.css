@@ -3,6 +3,22 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.input{
+  grid-column: 1;
+  width: 50%;
+  grid-row: 1;
+  background-color: wheat;
+  max-height: 50vh;
+}
+
+.cv{
+  grid-column: 2;
+  background-color: gray;
 }
 
 body{

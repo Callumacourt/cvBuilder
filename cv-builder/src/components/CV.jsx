@@ -14,10 +14,9 @@ export default function CV() {
 
     const updatePersonalDetails = (e) => {
         const { name, value } = e.target;
-        setPersonalDetails({ ...personalDetails, [name]: value });
+        setPersonalDetails((prev) => ({ ...prev, [name]: value }));
     };
     
-
     const [showEducation, setShowEducation] = useState(false);
     const [editing, setEditing] = useState(false);
     const [editingIndex, setEditingIndex] = useState(0);
@@ -31,48 +30,38 @@ export default function CV() {
         }
     ]);
 
-    const addSchool = (formData) => {
-        setSchools([
-            ...schools,
-            {
-                name: formData.name,
-                degree: formData.degree,
-                startYear:formData.startYear,
-                endYear: formData.endYear,
-                location: formData.location
-            }
-        ]);
+    const handleEdit = (event) => {
+        const { name, value } = event.target;  
+    
+        setSchools((prevSchools) => {
+            const updatedSchools = [...prevSchools];
+            updatedSchools[editingIndex] = { 
+                ...updatedSchools[editingIndex], 
+                [name]: value  
+            };
+            return updatedSchools;
+        });
     };
-
-    const editSchool = (field, value) => {
-        const updatedSchools = [...schools];
-        updatedSchools[editingIndex] = { ...updatedSchools[editingIndex], [field]: value };
-        setSchools(updatedSchools);
-    };
-
-
-    const updateFormData = (field, value) => {
-        if (editing) {
-            setSchools((prevSchools) => {
-                const updatedSchools = [...prevSchools];
-                updatedSchools[editingIndex] = { ...updatedSchools[editingIndex], [field]: value };
-                return updatedSchools;
-            });
-        }
-    };
-
+    
 
     const handleSubmit = (event, formData) => {
         event.preventDefault();
-        if(!editing){
-            addSchool(formData)
-        }
+        setSchools((prevSchools) => {
+            const updatedSchools = [...prevSchools];
+            if (editing) {
+                updatedSchools[editingIndex] = { ...updatedSchools[editingIndex], ...formData };
+            } else {
+                updatedSchools.push(formData);
+            }
+            return updatedSchools;
+        });
         setShowEducation(false);
         setEditing(false);
     };
 
     return (
         <>
+            <div className="cv">
             <CvHeader personalDetails={personalDetails} />
             <CvEducation 
                 schools={schools} 
@@ -80,21 +69,22 @@ export default function CV() {
                 setEditingIndex={setEditingIndex} 
                 setShowEducation={setShowEducation} 
             />
+            </div>
+            <div className="input">
             <PersonalInput 
                 personalDetails={personalDetails} 
                 updatePersonalDetails={updatePersonalDetails} 
             />
             <EducationInput 
-                updateFormData={updateFormData}
-                setEditing={setEditing}
+            handleEdit ={handleEdit}
                 editing={editing} 
                 showEducation={showEducation} 
-                formData={schools[editingIndex]} 
-                editSchool={editSchool} 
+                formData={schools[editingIndex] || {}} 
                 handleSubmit={handleSubmit} 
-                addSchool={addSchool}
                 setShowEducation={setShowEducation}
+                setEditing = {setEditing}
             />
+            </div>
         </>
     );
 }
