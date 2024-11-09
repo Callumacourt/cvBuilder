@@ -16,6 +16,7 @@ export default function CV() {
         const { name, value } = e.target;
         setPersonalDetails({ ...personalDetails, [name]: value });
     };
+    
 
     const [showEducation, setShowEducation] = useState(false);
     const [editing, setEditing] = useState(false);
@@ -34,11 +35,11 @@ export default function CV() {
         setSchools([
             ...schools,
             {
-                name: "",
-                degree: "",
-                startYear: 0,
-                endYear: 1,
-                location: ""
+                name: formData.name,
+                degree: formData.degree,
+                startYear:formData.startYear,
+                endYear: formData.endYear,
+                location: formData.location
             }
         ]);
     };
@@ -49,8 +50,23 @@ export default function CV() {
         setSchools(updatedSchools);
     };
 
-    const handleSubmit = (event) => {
+
+    const updateFormData = (field, value) => {
+        if (editing) {
+            setSchools((prevSchools) => {
+                const updatedSchools = [...prevSchools];
+                updatedSchools[editingIndex] = { ...updatedSchools[editingIndex], [field]: value };
+                return updatedSchools;
+            });
+        }
+    };
+
+
+    const handleSubmit = (event, formData) => {
         event.preventDefault();
+        if(!editing){
+            addSchool(formData)
+        }
         setShowEducation(false);
         setEditing(false);
     };
@@ -69,6 +85,8 @@ export default function CV() {
                 updatePersonalDetails={updatePersonalDetails} 
             />
             <EducationInput 
+                updateFormData={updateFormData}
+                setEditing={setEditing}
                 editing={editing} 
                 showEducation={showEducation} 
                 formData={schools[editingIndex]} 
