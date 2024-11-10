@@ -1,35 +1,23 @@
-import { useState } from 'react';
-import CvHeader from './CvHeader';
-import PersonalInput from './PersonalInput';
-import CvEducation from './CvEducation';
-import EducationInput from './EducationInput';
+import EducationInput from "./EducationInput";
+import PersonalInput from "./PersonalInput";
 
-export default function CV() {
-    const [personalDetails, setPersonalDetails] = useState({
-        name: 'Callum',
-        email: 'callumacourtt@gmail.com',
-        contact: '+44 123 456 789',
-        location: 'London'
-    });
 
+export default function Input({
+    personalDetails,
+    setPersonalDetails,
+    schools,
+    setSchools,
+    showEducation,
+    setShowEducation,
+    editing,
+    setEditing,
+    editingIndex,
+    beforeEdit,
+}) {
     const updatePersonalDetails = (e) => {
         const { name, value } = e.target;
         setPersonalDetails((prev) => ({ ...prev, [name]: value }));
     };
-    
-    const [showEducation, setShowEducation] = useState(false);
-    const [editing, setEditing] = useState(false);
-    const [editingIndex, setEditingIndex] = useState(0);
-    const [beforeEdit, setBeforeEdit] = useState("")
-    const [schools, setSchools] = useState([
-        {
-            name: "Cardiff Uni",
-            degree: "Computer Science",
-            startYear: 2024,
-            endYear: 2028,
-            location: "Cardiff"
-        }
-    ]);
 
     const handleEdit = (event) => {
         const { name, value } = event.target;  
@@ -70,19 +58,8 @@ export default function CV() {
     };
 
     return (
-        <>
-            <div className="cv">
-            <CvHeader personalDetails={personalDetails} />
-            <CvEducation 
-                schools={schools} 
-                setEditing={setEditing} 
-                setEditingIndex={setEditingIndex} 
-                setShowEducation={setShowEducation} 
-                setBeforeEdit = {setBeforeEdit}
-            />
-            </div>
-            <div className="input">
-            <PersonalInput 
+        <div className="input">
+          <PersonalInput 
                 personalDetails={personalDetails} 
                 updatePersonalDetails={updatePersonalDetails} 
             />
@@ -96,7 +73,7 @@ export default function CV() {
                 setShowEducation={setShowEducation}
                 setEditing = {setEditing}
             />
-            </div>
-        </>
-    );
+        </div>
+    )
+
 }
