@@ -101,11 +101,14 @@ export default function EducationInput({
                         </label>
                         <input type="submit" value={editing ? 'Save' : 'Add'} />
                         <input type="button" value={'Cancel'} onClick={() => {
-                            cancelEdit()
+                            if (editing){
+                                cancelEdit()
+                            }
                             setShowEducation(false)
                             setFormData({})
                             setEditing(false)
                             }}/>
+
                     </form>
                 </div>
             )}
