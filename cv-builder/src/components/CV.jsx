@@ -20,6 +20,7 @@ export default function CV() {
     const [showEducation, setShowEducation] = useState(false);
     const [editing, setEditing] = useState(false);
     const [editingIndex, setEditingIndex] = useState(0);
+    const [beforeEdit, setBeforeEdit] = useState("")
     const [schools, setSchools] = useState([
         {
             name: "Cardiff Uni",
@@ -43,13 +44,18 @@ export default function CV() {
         });
     };
     
-
-    // editingIndex needs to be stored in memory at the point before edit commmences
-    // if cancelEdit is called, then restore the school at editIndex, to it's previous value
+    const cancelEdit = () => {
+        setSchools((prevSchools) => {
+            const updatedSchools = [...prevSchools];
+            updatedSchools[editingIndex] = { 
+                ...updatedSchools[editingIndex] = beforeEdit,  
+            };
+            return updatedSchools;
+        });
+    }
 
     const handleSubmit = (event, formData) => {
         event.preventDefault();
-        previousValue = {}
         setSchools((prevSchools) => {
             const updatedSchools = [...prevSchools];
             if (editing) {
@@ -72,6 +78,7 @@ export default function CV() {
                 setEditing={setEditing} 
                 setEditingIndex={setEditingIndex} 
                 setShowEducation={setShowEducation} 
+                setBeforeEdit = {setBeforeEdit}
             />
             </div>
             <div className="input">
@@ -80,6 +87,7 @@ export default function CV() {
                 updatePersonalDetails={updatePersonalDetails} 
             />
             <EducationInput 
+            cancelEdit = {cancelEdit}
             handleEdit ={handleEdit}
                 editing={editing} 
                 showEducation={showEducation} 

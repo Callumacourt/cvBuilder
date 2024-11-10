@@ -7,6 +7,7 @@ export default function EducationInput({
     editing, 
     handleSubmit, 
     handleEdit, 
+    cancelEdit,
     setEditing
 }) {
     const [formData, setFormData] = useState(initialFormData);
@@ -100,6 +101,7 @@ export default function EducationInput({
                         </label>
                         <input type="submit" value={editing ? 'Save' : 'Add'} />
                         <input type="button" value={'Cancel'} onClick={() => {
+                            cancelEdit()
                             setShowEducation(false)
                             setFormData({})
                             setEditing(false)

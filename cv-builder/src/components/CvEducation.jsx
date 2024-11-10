@@ -1,5 +1,6 @@
-export default function CvEducation({ setEditingIndex, setEditing, setShowEducation, schools }) {
+export default function CvEducation({ setEditingIndex, setEditing, setShowEducation, schools, setBeforeEdit }) {
     const startEditingSchool = (index) => {
+        setBeforeEdit({...schools[index]})
         setEditingIndex(index);
         setEditing(true);
         setShowEducation(true);
