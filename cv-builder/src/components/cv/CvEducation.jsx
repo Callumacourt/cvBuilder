@@ -1,15 +1,19 @@
-export default function CvEducation({ setEditingIndex, setEditing, setShowEducation, schools, setBeforeEdit }) {
+export default function CvEducation({ setEditState, setShowEducation, schools}) {
     const startEditingSchool = (index) => {
-        setBeforeEdit({...schools[index]})
-        setEditingIndex(index);
-        setEditing(true);
+
+        setEditState({
+            editing: true,
+            index: index,
+            beforeEdit: {...schools[index]}
+
+        })
         setShowEducation(true);
     };
 
     return (
         <div className="education">
             {schools.map((school, index) => (
-                <div className="school" key={school.name}>
+                <div className="school" key={`${school.name}-${school.startYear}`}>
                     <h3>{school.name}</h3>
                     <p>{school.degree}</p>
                     <p>{school.startYear}</p>

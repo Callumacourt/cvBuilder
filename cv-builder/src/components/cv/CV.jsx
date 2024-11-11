@@ -12,9 +12,14 @@ export default function CV() {
     });
     
     const [showEducation, setShowEducation] = useState(false);
-    const [editing, setEditing] = useState(false);
-    const [editingIndex, setEditingIndex] = useState(0);
-    const [beforeEdit, setBeforeEdit] = useState("");
+
+    const [editState, setEditState] = useState({
+        editing: false,
+        type: "",
+        index: 0,
+        beforeEdit: ""
+    })
+    
     const [schools, setSchools] = useState([
         {
             name: "Cardiff Uni",
@@ -31,10 +36,8 @@ export default function CV() {
                 <CvHeader personalDetails={personalDetails} />
                 <CvEducation 
                     schools={schools} 
-                    setEditing={setEditing} 
-                    setEditingIndex={setEditingIndex} 
+                    setEditState = {setEditState}
                     setShowEducation={setShowEducation} 
-                    setBeforeEdit={setBeforeEdit}
                 />
             </div>
             <Input
@@ -44,11 +47,8 @@ export default function CV() {
                 setSchools={setSchools}
                 showEducation={showEducation}
                 setShowEducation={setShowEducation}
-                editing={editing}
-                setEditing={setEditing}
-                editingIndex={editingIndex}
-                beforeEdit={beforeEdit}
-                setBeforeEdit={setBeforeEdit}
+                editState = {editState}
+                setEditState = {setEditState}
             />
         </>
     );

@@ -4,23 +4,26 @@ export default function EducationInput({
     setShowEducation, 
     showEducation, 
     formData: initialFormData = {}, 
-    editing, 
+    editState, 
+    setEditState,
     handleSubmit, 
     handleEdit, 
     cancelEdit,
-    setEditing
 }) {
     const [formData, setFormData] = useState(initialFormData);
 
     useEffect(() => {
-        setFormData(initialFormData);
-    }, [initialFormData, editing]);
+        if (editState.editing) {
+            setFormData(initialFormData);
+        }
+    }, [initialFormData, editState.editing]);
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
 
-        if (editing) {
+        if (editState.editing == true) {
             handleEdit(e); 
         }
     };
@@ -28,15 +31,21 @@ export default function EducationInput({
     const onSubmit = (e) => {
         handleSubmit(e, formData);
         setFormData({}); 
-        editing = false
+        setEditState((prevState) => ({
+            ...prevState,
+            editing: false
+        }))
     };
 
     return (
         <div>
             <button onClick={() => {
-                setShowEducation(true);
+                setEditState((prevState) => ({
+                    ...prevState,
+                    editing: false
+                }))
                 setFormData({}); 
-                setEditing(false)
+                setShowEducation(true);
             }}>
                 Add School
             </button>
@@ -99,14 +108,17 @@ export default function EducationInput({
                             />
                             <br />
                         </label>
-                        <input type="submit" value={editing ? 'Save' : 'Add'} />
+                        <input type="submit" value={editState.editing ? 'Save' : 'Add'} />
                         <input type="button" value={'Cancel'} onClick={() => {
-                            if (editing){
+                            if (editState.editing){
                                 cancelEdit()
                             }
                             setShowEducation(false)
                             setFormData({})
-                            setEditing(false)
+                            setEditState((prevState) => ({
+                                ...prevState,
+                                editing: false
+                            }))
                             }}/>
 
                     </form>

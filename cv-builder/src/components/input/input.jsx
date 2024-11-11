@@ -9,10 +9,8 @@ export default function Input({
     setSchools,
     showEducation,
     setShowEducation,
-    editing,
-    setEditing,
-    editingIndex,
-    beforeEdit,
+    editState,
+    setEditState
 }) {
     const updatePersonalDetails = (e) => {
         const { name, value } = e.target;
@@ -24,8 +22,8 @@ export default function Input({
     
         setSchools((prevSchools) => {
             const updatedSchools = [...prevSchools];
-            updatedSchools[editingIndex] = { 
-                ...updatedSchools[editingIndex], 
+            updatedSchools[editState.index] = { 
+                ...updatedSchools[editState.index], 
                 [name]: value  
             };
             return updatedSchools;
@@ -35,8 +33,8 @@ export default function Input({
     const cancelEdit = () => {
         setSchools((prevSchools) => {
             const updatedSchools = [...prevSchools];
-            updatedSchools[editingIndex] = { 
-                ...updatedSchools[editingIndex] = beforeEdit,  
+            updatedSchools[editState.index] = { 
+                ...updatedSchools[editState.index] = editState.beforeEdit,  
             };
             return updatedSchools;
         });
@@ -46,15 +44,18 @@ export default function Input({
         event.preventDefault();
         setSchools((prevSchools) => {
             const updatedSchools = [...prevSchools];
-            if (editing) {
-                updatedSchools[editingIndex] = { ...updatedSchools[editingIndex], ...formData };
+            if (editState.editing) {
+                updatedSchools[editState.index] = { ...updatedSchools[editState.index], ...formData };
             } else {
                 updatedSchools.push(formData);
             }
             return updatedSchools;
         });
         setShowEducation(false);
-        setEditing(false);
+        setEditState((prevState) => ({
+            ...prevState,
+            editing: true
+        }))
     };
 
     return (
@@ -66,12 +67,12 @@ export default function Input({
             <EducationInput 
             cancelEdit = {cancelEdit}
             handleEdit ={handleEdit}
-                editing={editing} 
+                editState = {editState}
+                setEditState = {setEditState}
                 showEducation={showEducation} 
-                formData={schools[editingIndex] || {}} 
+                formData={schools[editState.index] || {}} 
                 handleSubmit={handleSubmit} 
                 setShowEducation={setShowEducation}
-                setEditing = {setEditing}
             />
         </div>
     )
