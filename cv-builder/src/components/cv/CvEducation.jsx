@@ -1,8 +1,8 @@
 export default function CvEducation({ setEditState, setShowEducation, schools}) {
     const startEditingSchool = (index) => {
-
         setEditState({
             editing: true,
+            type: "school",
             index: index,
             beforeEdit: {...schools[index]}
 
@@ -13,7 +13,7 @@ export default function CvEducation({ setEditState, setShowEducation, schools}) 
     return (
         <div className="education">
             {schools.map((school, index) => (
-                <div className="school" key={`${school.name}-${school.startYear}`}>
+                <div className="school" key={school.name}>
                     <h3>{school.name}</h3>
                     <p>{school.degree}</p>
                     <p>{school.startYear}</p>

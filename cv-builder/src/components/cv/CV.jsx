@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CvHeader from './CvHeader';
 import CvEducation from './CvEducation';
+import CvExperience from './CvExperience'
 import Input from '../input/input';
 
 export default function CV() {
@@ -12,6 +13,7 @@ export default function CV() {
     });
     
     const [showEducation, setShowEducation] = useState(false);
+    const [showExperience, setShowExperience] = useState(false);
 
     const [editState, setEditState] = useState({
         editing: false,
@@ -30,6 +32,16 @@ export default function CV() {
         }
     ]);
 
+    const [jobs, setJobs] = useState([
+        {
+            companyName: "Google",
+            title: "Junior Developer",
+            description: "Coding and stuff",
+            startYear: 2004, 
+            endYear: 2024
+        }
+    ])
+
     return (
         <>
             <div className="cv">
@@ -39,6 +51,8 @@ export default function CV() {
                     setEditState = {setEditState}
                     setShowEducation={setShowEducation} 
                 />
+                <CvExperience jobs={jobs}
+                 setShowExperience={setShowExperience}/>
             </div>
             <Input
                 personalDetails={personalDetails}
@@ -49,6 +63,8 @@ export default function CV() {
                 setShowEducation={setShowEducation}
                 editState = {editState}
                 setEditState = {setEditState}
+                showExperience = {showExperience}
+                setShowExperience = {setShowExperience}
             />
         </>
     );

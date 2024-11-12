@@ -1,4 +1,13 @@
-export default function CvExperience({ jobs, startEditing }) {
+export default function CvExperience({ jobs, setShowExperience }) {
+    const editExperience = (index) => {
+      setEditState({
+        editing: true,
+        type: 'job',
+        index: index,
+        beforeEdit: {...jobs[index]}
+      })
+      setShowExperience(true)
+    }
     return (
         <div className="experience">
             {jobs.map((job, index) => {
@@ -8,7 +17,7 @@ export default function CvExperience({ jobs, startEditing }) {
                         <p>{job.positionTitle}</p>
                         <p>{job.responsibilities}</p>
                         <p>From {job.startYear} - {job.endYear}</p>
-                        <button onClick={() => startEditing(index)}>Edit</button>
+                        <button onClick={() => editExperience(index)}>Edit</button>
                     </div>
                 );
             })}
