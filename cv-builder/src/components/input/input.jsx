@@ -1,6 +1,5 @@
-import EducationInput from "./EducationInput";
 import PersonalInput from "./PersonalInput";
-import ExperienceInput from "./ExperienceInput";
+import CreateForm from "./Form";
 
 export default function Input({
     personalDetails,
@@ -23,7 +22,7 @@ export default function Input({
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
-
+        
         const updateList = (list, setList) => {
             setList((prevList) => {
                 const updatedList = [...prevList];
@@ -42,62 +41,33 @@ export default function Input({
         }
     };
 
-    const cancelEdit = () => {
-
-          const cancelListEdit = (list, setList) => {
-          setList((prevList) => {
-            const updatedList = [...prevList];
-            updatedList[editState.index] = editState.beforeEdit;
-            return updatedList;
-          })
-          }
-          
-        if (editState.type === 'school') {
-            cancelListEdit(schools,setSchools)
-        } else if (editState.type === 'job') {
-            cancelListEdit(jobs, setJobs)
-        }
-    };
-
-    const handleSubmit = (event, formData) => {
-        event.preventDefault();
-        setSchools((prevSchools) => {
-            const updatedSchools = [...prevSchools];
-            if (editState.type === 'school' && editState.editing) {
-                updatedSchools[editState.index] = { ...updatedSchools[editState.index], ...formData };
-            } else if (editState.type === 'school') {
-                updatedSchools.push(formData);
-            }
-            return updatedSchools;
-        });
-        setShowEducation(false);
-        setEditState((prevState) => ({
-            ...prevState,
-            editing: true
-        }));
-    };
-
     return (
         <div className="input">
             <PersonalInput 
                 personalDetails={personalDetails} 
                 updatePersonalDetails={updatePersonalDetails} 
             />
-            <EducationInput 
-                cancelEdit={cancelEdit}
-                handleEdit={handleEdit}
+            <CreateForm 
+                handling = {'School'}
+                list={schools} 
+                setList = {setSchools}
+                formData={{}} 
                 editState={editState}
                 setEditState={setEditState}
-                showEducation={showEducation} 
-                formData={schools[editState.index] || {}} 
-                handleSubmit={handleSubmit} 
-                setShowEducation={setShowEducation}
-            />
-            <ExperienceInput
-                showExperience={showExperience}
-                setShowExperience={setShowExperience}
+                showList={showEducation}
+                setShowList={setShowEducation}
                 handleEdit={handleEdit}
+            />
+            <CreateForm 
+                handling = {'Job'}
+                list={jobs} 
+                setList={setJobs}
+                formData={{}} 
                 editState={editState}
+                setEditState={setEditState}
+                showList={showExperience}
+                setShowList={setShowExperience}
+                handleEdit={handleEdit}
             />
         </div>
     );

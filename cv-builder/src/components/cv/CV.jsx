@@ -18,7 +18,7 @@ export default function CV() {
     const [editState, setEditState] = useState({
         editing: false,
         type: "",
-        index: 0,
+        index: "",
         beforeEdit: ""
     })
     
@@ -52,13 +52,16 @@ export default function CV() {
                     setShowEducation={setShowEducation} 
                 />
                 <CvExperience jobs={jobs}
-                 setShowExperience={setShowExperience}/>
+                 setShowExperience={setShowExperience}
+                 setEditState={setEditState}/>
             </div>
             <Input
                 personalDetails={personalDetails}
                 setPersonalDetails={setPersonalDetails}
                 schools={schools}
                 setSchools={setSchools}
+                jobs={jobs}
+                setJobs={setJobs}
                 showEducation={showEducation}
                 setShowEducation={setShowEducation}
                 editState = {editState}
