@@ -1,4 +1,4 @@
-export default function CvEducation({ setEditState, setShowEducation, schools}) {
+export default function CvEducation({ setEditState, setShowEducation, schools, setSchools, deleteEle}) {
     const startEditingSchool = (index) => {
         setEditState({
             editing: true,
@@ -20,6 +20,7 @@ export default function CvEducation({ setEditState, setShowEducation, schools}) 
                     <p>{school.endYear}</p>
                     <p>{school.location}</p>
                     <button onClick={() => startEditingSchool(index)}>Edit</button>
+                    <button onClick={() => deleteEle(index, setSchools)}>Delete</button>
                 </div>
             ))}
         </div>

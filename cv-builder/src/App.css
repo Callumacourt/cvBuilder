@@ -21,6 +21,10 @@
   background-color: gray;
 }
 
+.input,  .cv {
+  min-height: 100vmin;
+}
+
 body{
   background-color: #6667AB;
 }

@@ -13,6 +13,9 @@ export default function CreateForm({
 }) {
   const [formData, setFormData] = useState(initialFormData);
 
+  const [formState, setFormState] = useState(list.length ? Object.keys(list[0]) : []);
+
+  
   useEffect(() => {
     if (editState.editing) {
       setFormData(list[editState.index]);
@@ -65,7 +68,10 @@ export default function CreateForm({
     setFormData({});
     setEditState((prevState) => ({
       ...prevState,
-      editing: false
+      editing: false,
+      type: "",
+      index: "",
+      beforeEdit: ""
     }));
   }
 
@@ -74,28 +80,29 @@ export default function CreateForm({
       <button
       onClick={handleAdd}>Add {handling}</button>
        {showList && (
-        <form onSubmit={onSubmit}>
-          {list.slice(0, 1).map((item, index) => (
-          <div key={index}>
-            {Object.entries(item).map(([key, value]) => (
-            <label htmlFor={key} key={key}>
-              {key}: 
-              <br />
-              <input
-              type={typeof value === "number" ? "number" : "text"}
-              name={key}
-              value={formData[key] || ""}
-              onChange={handleChange}
-              />
-              <br />
-            </label>
-            ))}
-          </div>
-          ))}
-          <button type="submit">{editState.editing ? "Save Changes" : "Submit"}</button>
-          <button type="button" onClick={() => {editState.editing ? cancelEdit() : setShowList(false)}}>Cancel</button>
-        </form>
+  <form onSubmit={onSubmit}>
+    <div>
+      {formState.map((key) => (
+        <label htmlFor={key} key={key}>
+          {key}: 
+          <br />
+          <input
+            type={typeof list[0]?.[key] === "number" ? "number" : "text"}
+            name={key}
+            value={formData[key] || ""}
+            onChange={handleChange}
+          />
+          <br />
+        </label>
+      ))}
+    </div>
+    <button type="submit">{editState.editing ? "Save Changes" : "Submit"}</button>
+    <button type="button" onClick={() => {editState.editing ? cancelEdit() : setShowList(false)}}>
+      Cancel
+    </button>
+  </form>
 )}
+
 
     </div>
   );
