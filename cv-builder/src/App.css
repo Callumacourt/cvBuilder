@@ -8,11 +8,31 @@
   grid-template-rows: 1fr;
 }
 
+.header{
+  background-color: white;
+}
+
+.contactInfo{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 2vmin;
+}
+
+.contactInfo img {
+  height: 3vmin;
+}
+
+.contactInfo div{
+  display: flex;
+  align-items: center;
+gap: 1vmin;}
+
 .input{
   grid-column: 1;
   width: 50%;
   grid-row: 1;
-  background-color: wheat;
+  background-color:lightslategray;
   max-height: 100%;
 }
 
@@ -21,13 +41,35 @@
   background-color: gray;
 }
 
+.education, .experience {
+  display: grid;
+  justify-items: center;
+}
+
+.school{
+  display: grid;
+  grid-template-rows: fit-content, fit-content;
+  grid-template-columns: 1fr 3fr;
+}
+
+.infoGroup button{
+  font-size: 1.5vmin;
+}
+
+
+.title{
+  width: 75%;
+  background-color: white;
+}
+
 .input,  .cv {
   min-height: 100vmin;
 }
 
 body{
-  background-color: #6667AB;
+  background-color:lightgrey
 }
+
 
 .logo {
   height: 6em;

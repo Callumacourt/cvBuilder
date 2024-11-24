@@ -41,8 +41,15 @@ export default function Input({
         }
     };
 
+    const clearCv = () => {
+        setPersonalDetails([])
+        setSchools([]);
+        setJobs([]);
+    }
+
     return (
         <div className="input">
+            <button onClick={clearCv}>Clear CV</button>
             <PersonalInput 
                 personalDetails={personalDetails} 
                 updatePersonalDetails={updatePersonalDetails} 

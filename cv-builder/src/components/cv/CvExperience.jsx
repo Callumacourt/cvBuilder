@@ -10,6 +10,7 @@ export default function CvExperience({ jobs, setShowExperience, setEditState, de
     }
     return (
         <div className="experience">
+            <h2 className="title">Professional Experience</h2>
             {jobs.map((job, index) => {
                 return (
                     <div className="job" key={index}>

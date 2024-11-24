@@ -12,15 +12,19 @@ export default function CvEducation({ setEditState, setShowEducation, schools, s
 
     return (
         <div className="education">
+            <h2 className="title">Education</h2>
             {schools.map((school, index) => (
                 <div className="school" key={school.name}>
+                    <div className="infoGroup">
+                    {school.startYear} - {school.endYear}
+                    {school.location}
+                    </div>
+                    <div className="infoGroup">
                     <h3>{school.name}</h3>
-                    <p>{school.degree}</p>
-                    <p>{school.startYear}</p>
-                    <p>{school.endYear}</p>
-                    <p>{school.location}</p>
+                    {school.degree}
                     <button onClick={() => startEditingSchool(index)}>Edit</button>
                     <button onClick={() => deleteEle(index, setSchools)}>Delete</button>
+                    </div>
                 </div>
             ))}
         </div>
