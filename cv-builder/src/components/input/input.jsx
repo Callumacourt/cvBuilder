@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import PersonalInput from "./PersonalInput";
 import CreateForm from "./Form";
 
@@ -6,76 +7,116 @@ export default function Input({
     setPersonalDetails,
     schools,
     setSchools,
-    showEducation,
-    setShowEducation,
-    editState,
-    setEditState,
-    showExperience,
-    setShowExperience,
-    jobs,              
+    jobs,
     setJobs
 }) {
+    const [activeList, setActiveList] = useState(null);
+    const [showForm, setShowForm] = useState(false);
+    const [editState, setEditState] = useState({ type: null, index: null });
+
     const updatePersonalDetails = (e) => {
         const { name, value } = e.target;
-        setPersonalDetails((prev) => ({ ...prev, [name]: value }));
+        setPersonalDetails(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleEdit = (event) => {
-        const { name, value } = event.target;
+    const handleEdit = (e) => {
+        const { name, value } = e.target;
+        const updateList = activeList === "schools" ? setSchools : setJobs;
         
-        const updateList = (list, setList) => {
-            setList((prevList) => {
-                const updatedList = [...prevList];
-                updatedList[editState.index] = {
-                    ...updatedList[editState.index],
-                    [name]: value
-                };
-                return updatedList;
-            });
-        };
-
-        if (editState.type === 'school') {
-            updateList(schools, setSchools);
-        } else if (editState.type === 'job') {
-            updateList(jobs, setJobs);
-        }
+        updateList(prevList => 
+            prevList.map((item, index) => 
+                index === editState.index 
+                    ? { ...item, [name]: value } 
+                    : item
+            )
+        );
     };
 
     const clearCv = () => {
-        setPersonalDetails([])
+        setPersonalDetails({
+            name: "",
+            email: "",
+            contact: "",
+            location: "",
+        });
         setSchools([]);
         setJobs([]);
-    }
+        setActiveList(null);
+        setShowForm(false);
+    };
+
+    const handleSectionClick = (type) => {
+        setActiveList(prevType => prevType === type ? null : type);
+        setShowForm(false);
+    };
+
+    const handleAddClick = () => {
+        setShowForm(true);
+        setEditState({ type: null, index: null });
+    };
+
+    const renderList = (items, type) => (
+        <>
+            <ul>
+                {items.map((item, index) => (
+                    <li 
+                        key={index} 
+                        onClick={() => {
+                            setEditState({ type, index });
+                            setShowForm(true);
+                        }}
+                    >
+                        {type === "schools" ? item.name : item.companyName}
+                        <button className="delete">Delete</button>
+                    </li>
+                ))}
+            </ul>
+            <button onClick={handleAddClick}>Add {type === "schools" ? "School" : "Job"}</button>
+        </>
+    );
 
     return (
         <div className="input">
             <button onClick={clearCv}>Clear CV</button>
-            <PersonalInput 
-                personalDetails={personalDetails} 
-                updatePersonalDetails={updatePersonalDetails} 
+            
+            <PersonalInput
+                personalDetails={personalDetails}
+                updatePersonalDetails={updatePersonalDetails}
             />
-            <CreateForm 
-                handling = {'School'}
-                list={schools} 
-                setList = {setSchools}
-                formData={{}} 
-                editState={editState}
-                setEditState={setEditState}
-                showList={showEducation}
-                setShowList={setShowEducation}
-                handleEdit={handleEdit}
-            />
-            <CreateForm 
-                handling = {'Job'}
-                list={jobs} 
-                setList={setJobs}
-                formData={{}} 
-                editState={editState}
-                setEditState={setEditState}
-                showList={showExperience}
-                setShowList={setShowExperience}
-                handleEdit={handleEdit}
-            />
+
+            <div 
+                onClick={() => handleSectionClick("schools")}
+                className={`section-header ${activeList === "schools" ? "active" : ""}`}
+            >
+                Education
+            </div>
+            {activeList === "schools" && renderList(schools, "schools")}
+
+            <div 
+                onClick={() => handleSectionClick("jobs")}
+                className={`section-header ${activeList === "jobs" ? "active" : ""}`}
+            >
+                Experience
+            </div>
+            {activeList === "jobs" && renderList(jobs, "jobs")}
+
+            {showForm && (
+                <CreateForm
+                    handling={activeList === "schools" ? "School" : "Job"}
+                    list={activeList === "schools" ? schools : jobs}
+                    setList={activeList === "schools" ? setSchools : setJobs}
+                    formData={editState.index !== null 
+                        ? (activeList === "schools" 
+                            ? schools[editState.index] 
+                            : jobs[editState.index]) 
+                        : {}
+                    }
+                    editState={editState}
+                    setEditState={setEditState}
+                    handleEdit={handleEdit}
+                    setShowForm={setShowForm}
+                />
+            )}
         </div>
     );
 }

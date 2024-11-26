@@ -19,6 +19,10 @@
   min-height: 10vmin;
 }
 
+.name{
+  min-height: 30px;
+}
+
 .header h3 {
   margin-top: 0;
   margin-bottom: 0;

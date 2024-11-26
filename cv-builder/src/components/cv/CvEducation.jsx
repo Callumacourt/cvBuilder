@@ -22,7 +22,6 @@ export default function CvEducation({ setEditState, setShowEducation, schools, s
                     </div>
                     <div className="infoGroup">
                     <p>{school.startYear} - {school.endYear}  {school.location}</p>
-                    <button onClick={() => startEditingSchool(index)}>Edit</button>
                     <button onClick={() => deleteEle(index, setSchools)}>Delete</button>
                     </div>
                 </div>

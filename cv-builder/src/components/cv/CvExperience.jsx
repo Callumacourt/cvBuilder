@@ -15,10 +15,9 @@ export default function CvExperience({ jobs, setShowExperience, setEditState, de
                 return (
                     <div className="job" key={index}>
                         <h3>{job.companyName}</h3>
-                        <p>{job.title}</p>
+                        <p>{job.position}</p>
                         <p>{job.description}</p>
                         <p>From {job.startYear} - {job.endYear}</p>
-                        <button onClick={() => editExperience(index)}>Edit</button>
                         <button onClick={() => deleteEle(index, setJobs)}>Delete</button>
                     </div>
                 );

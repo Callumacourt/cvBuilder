@@ -13,7 +13,8 @@ export default function CV() {
     });
     
     const [showEducation, setShowEducation] = useState(false);
-    const [showExperience, setShowExperience] = useState(false);
+    const [showExperience, setShowExperience] = useState(false); 
+
 
     const [editState, setEditState] = useState({
         editing: false,
@@ -39,7 +40,7 @@ export default function CV() {
     const [jobs, setJobs] = useState([
         {
             companyName: "Google",
-            title: "Junior Developer",
+            position: "Junior Developer",
             description: "Coding and stuff",
             startYear: 2004, 
             endYear: 2024

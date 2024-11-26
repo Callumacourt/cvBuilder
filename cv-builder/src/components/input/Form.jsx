@@ -7,103 +7,82 @@ export default function CreateForm({
   setList,
   editState,
   setEditState,
-  showList, 
-  setShowList,
+  setShowForm,
   handleEdit
 }) {
   const [formData, setFormData] = useState(initialFormData);
+  const [formState, setFormState] = useState(
+    handling === "School" 
+      ? ["name", "degree", "location", "startYear", "endYear"]
+      : ["companyName", "position", "description", "startYear", "endYear"]
+  );
 
-  const [formState, setFormState] = useState(list.length ? Object.keys(list[0]) : []);
-
-  
   useEffect(() => {
-    if (editState.editing) {
+    // If editing an existing entry, populate the form
+    if (editState.index !== null) {
       setFormData(list[editState.index]);
     } else {
+      // Reset form for new entry
       setFormData({});
     }
   }, [editState, list]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    handleEdit(e); 
+    console.log(name)
+    console.log(formData[name])
+    const updatedFormData = { ...formData, [name]: value };
+    setFormData(updatedFormData);
+    
+    // Only call handleEdit if in edit mode
+    if (editState.index !== null) {
+      handleEdit(e);
+    }
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(e, formData);
-    setFormData({});
-    setEditState((prevState) => ({
-      ...prevState,
-      editing: false
-    }));
-  };
-
-  const handleSubmit = (event, formData) => {
-    event.preventDefault();
+    
     setList((prevList) => {
       const updatedList = [...prevList];
-      if (editState.editing) {
-        updatedList[editState.index] = { ...updatedList[editState.index], ...formData };
+      
+      if (editState.index !== null) {
+        // Editing existing entry
+        updatedList[editState.index] = formData;
       } else {
+        // Adding new entry
         updatedList.push(formData);
       }
+      
       return updatedList;
     });
-    setShowList(false)
+
+    // Reset form and close
+    setFormData({});
+    setShowForm(false);
+    setEditState({ type: null, index: null });
   };
 
-  const cancelEdit = () => {
-    setList((prevList) => {
-      const updatedList = [...prevList];
-      updatedList[editState.index] = editState.beforeEdit;
-      return updatedList;
-    })
-  }
-
-  const handleAdd = () => {
-    cancelEdit()
-    setShowList(true);
-    setFormData({});
-    setEditState((prevState) => ({
-      ...prevState,
-      editing: false,
-      type: "",
-      index: "",
-      beforeEdit: ""
-    }));
-  }
-
   return (
-    <div>
-      <button
-      onClick={handleAdd}>Add {handling}</button>
-       {showList && (
-  <form onSubmit={onSubmit}>
-    <div>
+    <form onSubmit={handleSubmit}>
       {formState.map((key) => (
-        <label htmlFor={key} key={key}>
-          {key}: 
-          <br />
+        <div key={key}>
+          <label htmlFor={key}>
+            {key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase() })}:
+          </label>
           <input
-            type={typeof list[0]?.[key] === "number" ? "number" : "text"}
             name={key}
             value={formData[key] || ""}
             onChange={handleChange}
           />
-          <br />
-        </label>
+        </div>
       ))}
-    </div>
-    <button type="submit">{editState.editing ? "Save Changes" : "Submit"}</button>
-    <button type="button" onClick={() => {editState.editing ? cancelEdit() : setShowList(false)}}>
-      Cancel
-    </button>
-  </form>
-)}
-
-
-    </div>
+      <button type="submit">
+        {editState.index !== null ? "Save Changes" : `Add ${handling}`}
+      </button>
+      <button type="button" onClick={() => setShowForm(false)}>
+        Cancel
+      </button>
+    </form>
   );
 }
