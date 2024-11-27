@@ -22,10 +22,6 @@ export default function CV() {
         index: "",
         beforeEdit: ""
     })
-
-    const deleteEle = (indexToRemove, setList) => {
-        setList(prevList => prevList.filter((_, index) => index !== indexToRemove));
-      };
     
     const [schools, setSchools] = useState([
         {
@@ -55,13 +51,11 @@ export default function CV() {
                     schools={schools} 
                     setEditState = {setEditState}
                     setShowEducation={setShowEducation} 
-                    deleteEle = {deleteEle}
                     setSchools = {setSchools}
                 />
                 <CvExperience jobs={jobs}
                  setShowExperience={setShowExperience}
                  setEditState={setEditState}
-                 deleteEle={deleteEle}
                  setJobs = {setJobs}/>
             </div>
             <Input

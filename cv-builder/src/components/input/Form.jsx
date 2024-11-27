@@ -29,8 +29,6 @@ export default function CreateForm({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name)
-    console.log(formData[name])
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);
     
@@ -39,6 +37,19 @@ export default function CreateForm({
       handleEdit(e);
     }
   };
+
+  const cancelEdit = () => {
+    console.log(editState)
+    return
+    // Revert to the original data if editing was cancelled
+    if (editState.index !== null) {
+      setList((prevList) => {
+        const updatedList = [...prevList];
+        updatedList[editState.index] = editState.beforeEdit;
+        return updatedList;
+      });
+    }}
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -80,7 +91,7 @@ export default function CreateForm({
       <button type="submit">
         {editState.index !== null ? "Save Changes" : `Add ${handling}`}
       </button>
-      <button type="button" onClick={() => setShowForm(false)}>
+      <button type="button" onClick={() => cancelEdit()}>
         Cancel
       </button>
     </form>

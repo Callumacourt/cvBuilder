@@ -55,6 +55,14 @@ export default function Input({
         setEditState({ type: null, index: null });
     };
 
+    const deleteEle = (type, indexToRemove) => {
+        if (type === "schools") {
+            setSchools(prevList => prevList.filter((_, index) => index !== indexToRemove));
+        } else if (type === "jobs") {
+            setJobs(prevList => prevList.filter((_, index) => index !== indexToRemove));
+        }
+    };
+
     const renderList = (items, type) => (
         <>
             <ul>
@@ -67,7 +75,14 @@ export default function Input({
                         }}
                     >
                         {type === "schools" ? item.name : item.companyName}
-                        <button className="delete">Delete</button>
+                        <button 
+                            className="delete"
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent triggering edit when deleting
+                                deleteEle(type, index);
+                            }} 
+                            >Delete
+                        </button>
                     </li>
                 ))}
             </ul>
