@@ -14,9 +14,43 @@
   padding: 0;
 }
 
-.header{
+.cvManager{
   background-color: white;
-  min-height: 10vmin;
+  position: sticky;
+  top: 8px;
+  margin-bottom: 20px;
+}
+
+.personalDetails{
+  background-color: darkgray;
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+}
+
+.personalDetails label{
+  justify-self: start;
+  margin-left: 3px;
+  font-style: italic;
+  margin-bottom: 3px;
+}
+
+.personalDetails input {
+  border-radius: 12px;
+  padding: 10px;
+  border: 2px solid transparent;
+}
+
+.header{
+  background-color: lightsteelblue;
+  min-height: 15vmin;
+  font-size: 1.2rem;
+  display: grid;
+  align-items: center;
+}
+
+.header h3{
+  font-size: 1.7rem;
 }
 
 .name{
@@ -32,6 +66,7 @@
   display: flex;
   justify-content: center;
   align-content: center;
+  flex-wrap: wrap;
   gap: 2vmin;
 }
 
@@ -46,15 +81,16 @@ gap: 1vmin;}
 
 .input{
   grid-column: 1;
-  width: 100%;
+  width: 30vw;
   grid-row: 1;
-  background-color:lightslategray;
+  background-color:lightgray;
   max-height: 100%;
 }
 
+
 .cv{
   grid-column: 2;
-  background-color: gray;
+  background-color:white
 }
 
 .education, .experience {
@@ -63,9 +99,20 @@ gap: 1vmin;}
 }
 
 .section-header{
-  background-color: black;
-  color: white;
+  font-size: 1.35rem;
+  font-weight: bold;
 }
+
+.jobs-section, .schools-section {
+    min-height: 100px; 
+    margin-bottom: 20px; 
+    background-color: lightsteelblue;
+}
+
+.education-section *{
+  justify-self: start;
+}
+
 
 .school{
   display: grid;

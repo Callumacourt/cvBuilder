@@ -1,14 +1,4 @@
-export default function CvEducation({ setEditState, setShowEducation, schools, setSchools, deleteEle}) {
-    const startEditingSchool = (index) => {
-        setEditState({
-            editing: true,
-            type: "school",
-            index: index,
-            beforeEdit: {...schools[index]}
-
-        })
-        setShowEducation(true);
-    };
+export default function CvEducation({schools}) {
 
     return (
         <div className="education">
@@ -22,7 +12,6 @@ export default function CvEducation({ setEditState, setShowEducation, schools, s
                     </div>
                     <div className="infoGroup">
                     <p>{school.startYear} - {school.endYear}  {school.location}</p>
-                    <button onClick={() => deleteEle(index, setSchools)}>Delete</button>
                     </div>
                 </div>
             ))}

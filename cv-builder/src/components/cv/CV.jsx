@@ -12,17 +12,6 @@ export default function CV() {
         location: 'London'
     });
     
-    const [showEducation, setShowEducation] = useState(false);
-    const [showExperience, setShowExperience] = useState(false); 
-
-
-    const [editState, setEditState] = useState({
-        editing: false,
-        type: "",
-        index: "",
-        beforeEdit: ""
-    })
-    
     const [schools, setSchools] = useState([
         {
             name: "Cardiff Uni",
@@ -49,14 +38,9 @@ export default function CV() {
                 <CvHeader personalDetails={personalDetails} />
                 <CvEducation 
                     schools={schools} 
-                    setEditState = {setEditState}
-                    setShowEducation={setShowEducation} 
-                    setSchools = {setSchools}
                 />
                 <CvExperience jobs={jobs}
-                 setShowExperience={setShowExperience}
-                 setEditState={setEditState}
-                 setJobs = {setJobs}/>
+                />
             </div>
             <Input
                 personalDetails={personalDetails}
@@ -65,12 +49,6 @@ export default function CV() {
                 setSchools={setSchools}
                 jobs={jobs}
                 setJobs={setJobs}
-                showEducation={showEducation}
-                setShowEducation={setShowEducation}
-                editState = {editState}
-                setEditState = {setEditState}
-                showExperience = {showExperience}
-                setShowExperience = {setShowExperience}
             />
         </>
     );

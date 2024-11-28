@@ -7,7 +7,6 @@ export default function CreateForm({
   setList,
   editState,
   setEditState,
-  setShowForm,
   handleEdit
 }) {
   const [formData, setFormData] = useState(initialFormData);
@@ -17,39 +16,15 @@ export default function CreateForm({
       : ["companyName", "position", "description", "startYear", "endYear"]
   );
 
-  useEffect(() => {
-    // If editing an existing entry, populate the form
-    if (editState.index !== null) {
-      setFormData(list[editState.index]);
-    } else {
-      // Reset form for new entry
-      setFormData({});
-    }
-  }, [editState, list]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);
     
-    // Only call handleEdit if in edit mode
     if (editState.index !== null) {
       handleEdit(e);
     }
   };
-
-  const cancelEdit = () => {
-    console.log(editState)
-    return
-    // Revert to the original data if editing was cancelled
-    if (editState.index !== null) {
-      setList((prevList) => {
-        const updatedList = [...prevList];
-        updatedList[editState.index] = editState.beforeEdit;
-        return updatedList;
-      });
-    }}
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,9 +43,7 @@ export default function CreateForm({
       return updatedList;
     });
 
-    // Reset form and close
-    setFormData({});
-    setShowForm(false);
+    // Reset and close
     setEditState({ type: null, index: null });
   };
 
@@ -91,7 +64,10 @@ export default function CreateForm({
       <button type="submit">
         {editState.index !== null ? "Save Changes" : `Add ${handling}`}
       </button>
-      <button type="button" onClick={() => cancelEdit()}>
+      <button 
+        type="button" 
+        onClick={() => setEditState({ type: null, index: null })}
+      >
         Cancel
       </button>
     </form>
