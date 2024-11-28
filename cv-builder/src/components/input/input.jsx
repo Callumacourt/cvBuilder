@@ -10,7 +10,7 @@ export default function Input({
     jobs,
     setJobs,
 }) {
-    const [editState, setEditState] = useState({ type: null, index: null });
+    const [editState, setEditState] = useState({ type: null, index: null, beforeEdit: null });
 
     const clearCv = () => {
         setPersonalDetails({
@@ -26,6 +26,7 @@ export default function Input({
 
     const handleEdit = (e) => {
         const { name, value } = e.target;
+
         const updateList = editState.type === "schools" ? setSchools : setJobs;
 
         updateList((prevList) =>
@@ -60,7 +61,7 @@ export default function Input({
                 type="schools"
                 editState={editState}
                 setEditState={setEditState}
-                handleEdit={handleEdit} // Pass live edit handler
+                handleEdit={handleEdit} 
             />
 
             <Section

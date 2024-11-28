@@ -28,14 +28,14 @@
   padding: 10px;
 }
 
-.personalDetails label{
+label{
   justify-self: start;
   margin-left: 3px;
   font-style: italic;
   margin-bottom: 3px;
 }
 
-.personalDetails input {
+.personalDetails input, form input {
   border-radius: 12px;
   padding: 10px;
   border: 2px solid transparent;
@@ -103,11 +103,45 @@ gap: 1vmin;}
   font-weight: bold;
 }
 
+.section-content-child {
+  grid-template-columns: 150px fit-content(200px);
+  overflow-wrap: break-word; 
+  word-wrap: break-word;    
+  word-break: break-word;   
+  white-space: normal;     
+  overflow: hidden;
+  justify-content: space-evenly;
+  align-items: center;
+  display: grid;
+  cursor: pointer;
+}
+
+.section-content-child span{
+  justify-self: start;
+}
+.delete{
+  height: auto;
+  width: fit-content;
+  font-size: 0.5rem;
+}
+
 .jobs-section, .schools-section {
     min-height: 100px; 
-    margin-bottom: 20px; 
+    margin-top: 20px; 
     background-color: lightsteelblue;
+    padding: 5%;
 }
+
+input{
+  width: 90%;
+}
+
+form div{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
 
 .education-section *{
   justify-self: start;

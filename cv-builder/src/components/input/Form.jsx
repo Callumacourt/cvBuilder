@@ -17,6 +17,7 @@ export default function CreateForm({
   );
 
   const handleChange = (e) => {
+    console.log(editState.beforeEdit)
     const { name, value } = e.target;
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);
@@ -47,6 +48,21 @@ export default function CreateForm({
     setEditState({ type: null, index: null });
   };
 
+  const handleCancel = () => {
+    setList((prevList) => {
+        if (editState.index !== null) {
+            // Create a new array with the `beforeEdit` value restored
+            return prevList.map((item, index) =>
+                index === editState.index ? editState.beforeEdit : item
+            );
+        }
+        return prevList; // No changes if index is null
+    });
+
+    setEditState({ type: null, index: null, beforeEdit: null }); // Reset edit state
+};
+
+
   return (
     <form onSubmit={handleSubmit}>
       {formState.map((key) => (
@@ -66,7 +82,7 @@ export default function CreateForm({
       </button>
       <button 
         type="button" 
-        onClick={() => setEditState({ type: null, index: null })}
+        onClick={() =>handleCancel()}
       >
         Cancel
       </button>
