@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PersonalInput from "./PersonalInput";
 import Section from "./Section";
+import {defaultPersonalDetails, defaultSchools, defaultJobs } from '../../data/defaultData';
 
 export default function Input({
     personalDetails,
@@ -24,6 +25,13 @@ export default function Input({
         setEditState({ type: null, index: null });
     };
 
+    const loadExample = () => {
+        console.log(defaultPersonalDetails)
+        setPersonalDetails(defaultPersonalDetails);
+        setSchools(defaultSchools);
+        setJobs(defaultJobs);
+    }
+
     const handleEdit = (e) => {
         const { name, value } = e.target;
 
@@ -40,7 +48,7 @@ export default function Input({
         <div className="input">
             <div className="cvManager">
                 <button onClick={clearCv}>Clear CV</button>
-                <button>Load Example</button>
+                <button onClick={loadExample}>Load Example</button>
             </div>
 
             <PersonalInput

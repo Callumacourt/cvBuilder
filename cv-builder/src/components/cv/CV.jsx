@@ -3,34 +3,14 @@ import CvHeader from './CvHeader';
 import CvEducation from './CvEducation';
 import CvExperience from './CvExperience'
 import Input from '../input/input';
+import {defaultPersonalDetails, defaultSchools, defaultJobs } from '../../data/defaultData';
 
 export default function CV() {
-    const [personalDetails, setPersonalDetails] = useState({
-        name: 'Callum',
-        email: 'callumacourtt@gmail.com',
-        contact: '+44 123 456 789',
-        location: 'London'
-    });
+    const [personalDetails, setPersonalDetails] = useState(defaultPersonalDetails);
     
-    const [schools, setSchools] = useState([
-        {
-            name: "Cardiff Uni",
-            degree: "Computer Science",
-            startYear: 2024,
-            endYear: 2028,
-            location: "Cardiff"
-        }
-    ]);
+    const [schools, setSchools] = useState(defaultSchools);
 
-    const [jobs, setJobs] = useState([
-        {
-            companyName: "Google",
-            position: "Junior Developer",
-            description: "Coding and stuff",
-            startYear: 2004, 
-            endYear: 2024
-        }
-    ])
+    const [jobs, setJobs] = useState(defaultJobs)
 
     return (
         <>

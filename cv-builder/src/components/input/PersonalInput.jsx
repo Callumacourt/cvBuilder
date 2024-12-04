@@ -6,6 +6,8 @@ export default function PersonalInput({ personalDetails, updatePersonalDetails }
         <input
           type="text"
           name="name"
+          id="name"
+          autoComplete="given-name"
           value={personalDetails.name}  
           onChange={updatePersonalDetails}
         />
@@ -13,6 +15,8 @@ export default function PersonalInput({ personalDetails, updatePersonalDetails }
         <input
           type="text"
           name="email"
+          id="email"
+          autoComplete="given-email"
           value={personalDetails.email}  
           onChange={updatePersonalDetails}
         />
@@ -20,6 +24,7 @@ export default function PersonalInput({ personalDetails, updatePersonalDetails }
         <input
           type="text"
           name="contact"
+          id="contact"
           value={personalDetails.contact} 
           onChange={updatePersonalDetails}
         />
@@ -27,6 +32,7 @@ export default function PersonalInput({ personalDetails, updatePersonalDetails }
         <input
           type="text"
           name="location"
+          id="location"
           value={personalDetails.location} 
           onChange={updatePersonalDetails}
         />
