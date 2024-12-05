@@ -18,7 +18,8 @@ export const defaultSchools = [{
 export const defaultJobs = [{
     companyName: "Google",
     position: "Junior Developer",
-    description: "Coding and stuff",
+    location: 'London',
+    description: "Worked as a Junior Software Developer at Google, contributing to various projects, writing code, fixing bugs, and collaborating with the team to deliver innovative solutions. Gained experience in software development, teamwork, and problem-solving while supporting the creation of impactful applications.",
     startYear: 2004, 
     endYear: 2024
 }];

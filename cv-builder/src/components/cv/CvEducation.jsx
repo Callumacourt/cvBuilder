@@ -7,11 +7,11 @@ export default function CvEducation({schools}) {
             {schools.map((school, index) => (
                 <div className="school" key={school.name}>
                     <div className="infoGroup">
-                    <h3>{school.name}</h3>
-                    <p>{school.degree}</p>
+                    <p>From {school.startYear} - {school.endYear}  {school.location}</p>
                     </div>
                     <div className="infoGroup">
-                    <p>{school.startYear} - {school.endYear}  {school.location}</p>
+                    <h3>{school.name}</h3>
+                    <p>{school.degree}</p>
                     </div>
                 </div>
             ))}

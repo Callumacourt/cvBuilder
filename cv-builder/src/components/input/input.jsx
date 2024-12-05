@@ -26,7 +26,6 @@ export default function Input({
     };
 
     const loadExample = () => {
-        console.log(defaultPersonalDetails)
         setPersonalDetails(defaultPersonalDetails);
         setSchools(defaultSchools);
         setJobs(defaultJobs);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CreateForm from "./Form";
+import deleteIcon from "../../assets/deleteIcon.svg"
 
 export default function Section({
     title,
@@ -62,15 +63,12 @@ export default function Section({
                                             ? item.name
                                             : item.position}
                                     </span>
-                                    <button
-                                        className="delete"
+                                        <img  className="delete"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleDelete(index);
-                                        }}
-                                    >
-                                        Delete
-                                    </button>
+                                        }} 
+                                        src={deleteIcon} alt="Delete" />
                                 </div>
                             ))}
                             <div className="addButton">

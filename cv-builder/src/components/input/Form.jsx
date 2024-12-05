@@ -13,7 +13,7 @@ export default function CreateForm({
   const [formState, setFormState] = useState(
     handling === "School" 
       ? ["name", "degree", "location", "startYear", "endYear"]
-      : ["companyName", "position", "description", "startYear", "endYear"]
+      : ["companyName", "position", "location", "description", "startYear", "endYear"]
   );
 
   const handleChange = (e) => {
@@ -77,6 +77,7 @@ export default function CreateForm({
           />
         </div>
       ))}
+      <div className="buttonContainer">
       <button type="submit">
         {editState.index !== null ? "Save Changes" : `Add ${handling}`}
       </button>
@@ -86,6 +87,7 @@ export default function CreateForm({
       >
         Cancel
       </button>
+      </div>
     </form>
   );
 }
