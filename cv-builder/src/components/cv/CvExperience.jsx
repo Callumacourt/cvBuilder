@@ -1,25 +1,19 @@
-export default function CvExperience({ jobs, setShowExperience, setEditState, deleteEle, setJobs}) {
-    const editExperience = (index) => {
-      setEditState({
-        editing: true,
-        type: 'job',
-        index: index,
-        beforeEdit: {...jobs[index]}
-      })
-      setShowExperience(true)
-    }
+export default function CvExperience({ jobs}) {
     return (
         <div className="experience">
             <h2 className="title">Professional Experience</h2>
             {jobs.map((job, index) => {
                 return (
                     <div className="job" key={index}>
-                        <h3>{job.companyName}</h3>
-                        <p>{job.title}</p>
-                        <p>{job.description}</p>
+                        <div className="infoGroup">
                         <p>From {job.startYear} - {job.endYear}</p>
-                        <button onClick={() => editExperience(index)}>Edit</button>
-                        <button onClick={() => deleteEle(index, setJobs)}>Delete</button>
+                        <p>{job.location}</p>
+                        </div>
+                        <div className="infoGroup">
+                        <h3>{job.companyName}</h3>
+                        <p>{job.position}</p>
+                        <p className="description">{job.description}</p>
+                        </div>
                     </div>
                 );
             })}

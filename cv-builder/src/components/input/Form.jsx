@@ -7,103 +7,87 @@ export default function CreateForm({
   setList,
   editState,
   setEditState,
-  showList, 
-  setShowList,
   handleEdit
 }) {
   const [formData, setFormData] = useState(initialFormData);
-
-  const [formState, setFormState] = useState(list.length ? Object.keys(list[0]) : []);
-
-  
-  useEffect(() => {
-    if (editState.editing) {
-      setFormData(list[editState.index]);
-    } else {
-      setFormData({});
-    }
-  }, [editState, list]);
+  const [formState, setFormState] = useState(
+    handling === "School" 
+      ? ["name", "degree", "location", "startYear", "endYear"]
+      : ["companyName", "position", "location", "description", "startYear", "endYear"]
+  );
 
   const handleChange = (e) => {
+    console.log(editState.beforeEdit)
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    handleEdit(e); 
+    const updatedFormData = { ...formData, [name]: value };
+    setFormData(updatedFormData);
+    
+    if (editState.index !== null) {
+      handleEdit(e);
+    }
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(e, formData);
-    setFormData({});
-    setEditState((prevState) => ({
-      ...prevState,
-      editing: false
-    }));
-  };
-
-  const handleSubmit = (event, formData) => {
-    event.preventDefault();
+    
     setList((prevList) => {
       const updatedList = [...prevList];
-      if (editState.editing) {
-        updatedList[editState.index] = { ...updatedList[editState.index], ...formData };
+      
+      if (editState.index !== null) {
+        // Editing existing entry
+        updatedList[editState.index] = formData;
       } else {
+        // Adding new entry
         updatedList.push(formData);
       }
+      
       return updatedList;
     });
-    setShowList(false)
+
+    // Reset and close
+    setEditState({ type: null, index: null });
   };
 
-  const cancelEdit = () => {
+  const handleCancel = () => {
     setList((prevList) => {
-      const updatedList = [...prevList];
-      updatedList[editState.index] = editState.beforeEdit;
-      return updatedList;
-    })
-  }
+        if (editState.index !== null) {
+            // Create a new array with the `beforeEdit` value restored
+            return prevList.map((item, index) =>
+                index === editState.index ? editState.beforeEdit : item
+            );
+        }
+        return prevList; // No changes if index is null
+    });
 
-  const handleAdd = () => {
-    cancelEdit()
-    setShowList(true);
-    setFormData({});
-    setEditState((prevState) => ({
-      ...prevState,
-      editing: false,
-      type: "",
-      index: "",
-      beforeEdit: ""
-    }));
-  }
+    setEditState({ type: null, index: null, beforeEdit: null }); // Reset edit state
+};
+
 
   return (
-    <div>
-      <button
-      onClick={handleAdd}>Add {handling}</button>
-       {showList && (
-  <form onSubmit={onSubmit}>
-    <div>
+    <form onSubmit={handleSubmit}>
       {formState.map((key) => (
-        <label htmlFor={key} key={key}>
-          {key}: 
-          <br />
+        <div key={key}>
+          <label htmlFor={key}>
+            {key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase() })}:
+          </label>
           <input
-            type={typeof list[0]?.[key] === "number" ? "number" : "text"}
             name={key}
             value={formData[key] || ""}
             onChange={handleChange}
           />
-          <br />
-        </label>
+        </div>
       ))}
-    </div>
-    <button type="submit">{editState.editing ? "Save Changes" : "Submit"}</button>
-    <button type="button" onClick={() => {editState.editing ? cancelEdit() : setShowList(false)}}>
-      Cancel
-    </button>
-  </form>
-)}
-
-
-    </div>
+      <div className="buttonContainer">
+      <button type="submit">
+        {editState.index !== null ? "Save Changes" : `Add ${handling}`}
+      </button>
+      <button 
+        type="button" 
+        onClick={() =>handleCancel()}
+      >
+        Cancel
+      </button>
+      </div>
+    </form>
   );
 }
