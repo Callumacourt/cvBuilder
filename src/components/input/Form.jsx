@@ -17,7 +17,6 @@ export default function CreateForm({
   );
 
   const handleChange = (e) => {
-    console.log(editState.beforeEdit)
     const { name, value } = e.target;
     const updatedFormData = { ...formData, [name]: value };
     setFormData(updatedFormData);

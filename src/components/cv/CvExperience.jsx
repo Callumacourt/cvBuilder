@@ -6,8 +6,7 @@ export default function CvExperience({ jobs}) {
                 return (
                     <div className="job" key={index}>
                         <div className="infoGroup">
-                        <p>From {job.startYear} - {job.endYear}</p>
-                        <p>{job.location}</p>
+                        <p>{job.startYear} - {job.endYear} {job.location}</p>
                         </div>
                         <div className="infoGroup">
                         <h3>{job.companyName}</h3>
