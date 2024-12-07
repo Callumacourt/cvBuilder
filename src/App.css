@@ -11,6 +11,7 @@
   word-wrap: break-word;    
   word-break: break-word;   
   white-space: normal;  
+  color: black !important;
 }
 
 @font-face {
@@ -68,6 +69,7 @@ label{
   font-size: 1.2rem;
   display: grid;
   align-items: center;
+  padding: 20px;
 }
 
 .header h3{
@@ -158,10 +160,10 @@ gap: 1vmin;}
 
 
 .jobs-section, .schools-section {
-    min-height: 100px; 
     margin-top: 20px; 
     background-color: lightsteelblue;
     padding: 5%;
+    height: fit-content;
 }
 
 input{
@@ -324,6 +326,8 @@ body{
   #root {
     grid-template-columns: 1fr;
     padding: 1rem;
+    margin: 0;
+    width: 100%;
     gap: 3vmin;
   }
 
@@ -366,13 +370,22 @@ body{
     width: 100%;
     gap: 10px;
     margin-bottom: 3vmin;
+    padding: 10px;
     text-align: center;
+  }
+
+  .description{
+    text-align: justify;
+    word-wrap: break-word;
   }
 
   .section-content-child {
     grid-template-columns: 1fr;
     justify-items: center;
     text-align: center;
+    display: grid;
+    grid-template-columns: 200px 20px;
+    justify-items: center;
   }
 
   .buttonContainer {
